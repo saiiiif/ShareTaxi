@@ -74,7 +74,7 @@
                 <div class="col-md-12">
                     <h2>@lang('General::search.nearby_photographs')</h2>
                     <h4>@lang('General::search.nearby_photographs_heading')</h4>
-                    <form method="post" action="{{ route('showSearchResult') }}">
+                    <form method="post" action="">
                         {{ csrf_field() }}
                     <div class="main-search-input">
                         <a href="#" class="location"><i class="fa fa-map-marker"></i></a>
@@ -87,10 +87,7 @@
                         <div class="main-search-input-item">
                             <select data-placeholder="@lang('General::common.all_categories')" class="chosen-select" name="category">
                                 <option value="-1">@lang('General::common.all_categories')</option>
-                                @foreach($categories as $category)
-                                    <option value="{{ $category->id }}">{{ $category->title }}</option>
-                                @endforeach
-                            </select>
+                                                         </select>
                         </div>
 
                         <button type="submit" class="button">@lang('General::search.button')</button>

@@ -2,7 +2,7 @@
 
 @section('head')
     @include('frontOffice.inc.head',
-    ['title' => 'WellPic - Version Bêta',
+    ['title' => 'TaxiShare - Version Bêta',
     'description' => 'Votre photographe en quelques clics, où vous voulez et quand vous le désirez'
     ])
 @endsection
@@ -13,7 +13,7 @@
 
 @section('content')
 
-    @include('General::frontOffice.widgets.search', ['categories' => $categories])
+    @include('General::frontOffice.widgets.search')
 
     <!-- Content
         ================================================== -->
@@ -22,8 +22,7 @@
 
             <div class="col-md-12">
                 <h3 class="headline centered margin-top-75">
-                    @lang('General::common.popular_categories')
-                    @lang('General::common.popular_categories_heading')
+                  
                 </h3>
             </div>
 
@@ -33,17 +32,7 @@
     <!-- Categories -->
     <div class="fullwidth-carousel-container margin-top-25">
         <div class="fullwidth-slick-carousel category-carousel" role="toolbar">
-            @foreach($categories as $category)
-            <div class="category-box-container slick-slide">
-                <a href="{{ route('showCategoryPhotographs', ['title' => strtolower($category->title)]) }}" class="category-box" data-background-image="{{ route('showHome').'/'.$category->media->link }}" tabindex="0">
-                    <div class="category-box-content">
-                        <h3>{{ $category->title }}</h3>
-                        <span>{{ $category->photographs->count() }} Photographes</span>
-                    </div>
-
-                    <div class="category-box-background" style="background-image: url('{{ route('showHome').'/'.$category->media->link }}');"></div></a>
-            </div>
-            @endforeach
+          
         </div>
     </div>
 
@@ -63,7 +52,7 @@
                 <script>
                     function bookmark(id) {
                         $.ajax({
-                            url: "{{ route('showHome') }}/photograph/"+ id +"/bookmark",
+                            url: "{{ route('showHome') }}",
                             headers: {
                                 'X-CSRF-TOKEN': $('#csrf').val()
                             },
@@ -91,39 +80,20 @@
 
                 <div class="col-md-12">
                     <div class="simple-slick-carousel">
-                        @foreach($photographs as $photograph)
+                        
                         <div class=" slick-slide">
                             <a class="listing-item-container" data-marker-id="1">
-                                <div class="listing-item" onClick="window.location='{{ route('showPhotographProfile', ['id' => $photograph->id]) }}';" >
-                                    <img src="@if($photograph->defaultPicture){{ route('showHome') .'/'. $photograph->defaultPicture->link }}@else{{ route('showHome') .'/'. $photograph->user->image}}@endif" alt="" >
+                                <div class="listing-item" onClick="window.location=" >
+                                   
                                     <div class="listing-item-content">
 
-                                        <h3 >{{ $photograph->user->first_name }}, {{ $photograph->user->last_name }}</h3>
+                                     
 
                                     </div>
                                 </div>
                                 <div class="star-rating">
                                     <div class="rating-counter">
-                                        (@if(countPhotographReviews($photograph->id) == 0) 1
-                                        @else {{  countPhotographReviews($photograph->id) }}
-                                        @endif avis)
-                                    </div>
-                                    @if(countPhotographReviews($photograph->id) == 0)
-                                        <span class="star"></span><span class="star"></span><span class="star"></span><span class="star"></span><span class="star"></span>
-                                    @else
-                                        @for ($i = 0; $i < round(averagePhotographReviews($photograph->id)); $i++)
-                                            <span class="star"></span>
-                                        @endfor
-                                        @for ($i = 0; $i < (5 - round(averagePhotographReviews($photograph->id))); $i++)
-                                            <span class="star empty"></span>
-                                        @endfor
-                                    @endif
-                                </div>
-                                <span onclick="bookmark({{$photograph->id}})" class="like-icon @if(Auth::user() and checkUserPhotographBookmark(Auth::user()->id, $photograph->id)) liked @endif"></span>
-
-                            </a>
-                        </div>
-                        @endforeach
+                                        
                     </div>
                 </div>
             </div>
@@ -176,3 +146,4 @@
 @section('footer')
     @include('frontOffice.inc.footer')
 @endsection
+
